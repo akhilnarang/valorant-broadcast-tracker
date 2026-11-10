@@ -1,0 +1,26 @@
+# Cargo build output
+/target
+
+# rustfmt backups
+**/*.rs.bk
+
+# MSVC debug information
+*.pdb
+
+# Local environment
+.env
+
+# Test images from scripts/fetch-testdata.sh
+/testdata/frames/
+/testdata/teamplates/
+/scoreboard/testdata/*.png
+/scoreboard/testdata/*.jpg
+
+# Local run output
+/data/
+video-token
+video-token.lock
+*.jsonl
+*.log
+*.rgb
+*.mp4

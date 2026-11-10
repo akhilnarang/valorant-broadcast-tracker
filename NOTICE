@@ -1,0 +1,58 @@
+vbt
+Copyright (c) 2026 Akhil Narang
+
+The code in this repository is MIT licensed (see LICENSE). The following parts are
+not covered by that licence.
+
+PP-OCRv6 recognition model
+--------------------------
+
+PP-OCRv6_rec_pruned.onnx is built into vbt-scoreboard and published at
+https://files.akhilnarang.dev/cdn/valorant/ocr/v1/. It is derived from PP-OCRv6_rec_tiny.onnx by
+PaddleOCR (https://github.com/PaddlePaddle/PaddleOCR), as converted to ONNX by
+RapidOCR (https://github.com/RapidAI/RapidOCR), v3.9.2, sha256
+e16e242de5937ad92609223f19bc2aff3727ee40b095f996907c24749bad251b.
+This project does not redistribute the unmodified model.
+
+  PaddleOCR: Copyright (c) 2016 PaddlePaddle Authors. All Rights Reserved.
+  RapidOCR: Copyright (c) 2021 RapidOCR Authors. All rights reserved.
+            Copyright (c) 2021 RapidAI. All rights reserved.
+
+The model is licensed under the Apache License, Version 2.0; a copy is in
+LICENSES/Apache-2.0.txt. The published model file is modified (pruned, as
+described below). Its Apache-2.0 licence text and this notice are published
+next to it at
+https://files.akhilnarang.dev/cdn/valorant/ocr/v1/LICENSE-Apache-2.0.txt and
+https://files.akhilnarang.dev/cdn/valorant/ocr/v1/NOTICE.txt.
+
+Modification: scoreboard/tools/prune_head.py slices the model's classification
+head to the 128 classes the scoreboard reads (blank, printable ASCII, the
+Latin-1 letters, space) and trims the character list to match. Nothing else
+in the model is changed.
+
+imaging resize
+--------------
+
+vision/src/resample.rs is a Rust port of Resize from imaging v1.6.2
+(https://github.com/disintegration/imaging), Copyright (c) 2012 Grigory
+Dryapak, MIT licensed; the licence text is in LICENSES/imaging-MIT.txt. The
+port keeps imaging's arithmetic so its output matches pixel for pixel, which
+the glyph templates and the digit classifier were built on.
+
+VALORANT broadcast material
+---------------------------
+
+The broadcast frames and crops in assets/, in the test data (testdata/ and
+scoreboard/testdata/, fetched by scripts/fetch-testdata.sh) and in the digit
+training glyphs (fetched by vision/tools/train_digits.py) come from Riot
+Games' VALORANT esports broadcasts. They belong to Riot Games and are not
+covered by this project's licence. They are used under Riot Games' "Legal
+Jibber Jabber" fan content policy.
+
+vbt isn't endorsed by Riot Games and doesn't reflect the views or opinions of
+Riot Games or anyone officially involved in producing or managing Riot Games
+properties. Riot Games, and all associated properties are trademarks or
+registered trademarks of Riot Games, Inc.
+
+Team names and tags, including the tag crops vbt learns from the broadcast at
+runtime, belong to their respective owners.

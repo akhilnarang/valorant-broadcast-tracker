@@ -1,0 +1,23 @@
+# Runs the live vbt writer from ~/vbt. Only one live writer runs per token file: a second
+# one exits at startup because the first holds data/video-token.lock.
+[Unit]
+Description=Valorant broadcast tracker (vbt)
+StartLimitIntervalSec=60s
+StartLimitBurst=5
+
+[Service]
+Type=simple
+WorkingDirectory=%h/vbt
+# Point this at the backend's Unix socket.
+Environment=BACKEND_SOCKET=/path/to/backend.sock
+ExecStart=%h/vbt/launch-primary.sh
+Restart=always
+RestartSec=5s
+# A deliberate SIGTERM stop is not a crash.
+SuccessExitStatus=143
+TimeoutStopSec=30s
+KillMode=mixed
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target
